@@ -1,35 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="styles.css">
-   <link rel="icon" type="images/icon-192" href="favicon.ico">
 </head>
 <body>
-    <header>
-        <h3>Admin Panel</h3>
-        <div class="header-controls">
-            <button id="themeToggle" class="btn-outline" style="color:white; border-color:white; padding: 5px 10px;">🌗</button>
-        </div>
-    </header>
 
-    <main class="container">
-        <div class="card">
-            <h2>Sign-in Database</h2>
-            <div id="signinLogs" style="margin: 15px 0;"></div>
-            <button class="btn btn-outline" onclick="exportSignins()">Download Log (CSV)</button>
-        </div>
+<header>
+    <h3>Admin Dashboard</h3>
+    <button class="btn-outline" onclick="localStorage.removeItem('adminLogged');location.href='admin-login.html'">
+        Logout
+    </button>
+</header>
 
-        <div class="card">
-            <h2>Recent Orders</h2>
-            <div id="adminOrders" style="margin-top: 15px;"></div>
-        </div>
+<div class="container">
+    <div id="adminOrders"></div>
+</div>
 
-        <a href="index.html" class="btn btn-primary">Back to Site</a>
-    </main>
-
-    <script src="app.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
