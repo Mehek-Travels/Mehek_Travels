@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Seaters - Mehek Travels</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="images/icon-192.png" href="favicon.ico">
+</head>
+<body>
+    <header>
+        <h3>Select Seaters</h3>
+        <div class="header-controls">
+            <button id="themeToggle" class="btn-outline" style="color:white; border-color:white; padding: 5px 10px;">🌗</button>
+            <a href="cart.html" class="btn-outline" style="color:white; border-color:white; text-decoration:none; padding: 5px 10px;">🛒 (<span id="cartCount">0</span>)</a>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="card">
+            <h2>Vehicle Categories</h2>
+            <button class="btn btn-outline" onclick="alert('Sorry, we dont have them on our fleet now.')">🚗 4 Seaters</button>
+            <button class="btn btn-outline" onclick="alert('Sorry, we dont have them on our fleet now.')">🚙 5 Seaters</button>
+            <button class="btn btn-primary" onclick="window.location.href='rumion.html'">🚐 7 Seaters (Available)</button>
+        </div>
+        <a href="index.html" class="btn btn-outline">Back to Home</a>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

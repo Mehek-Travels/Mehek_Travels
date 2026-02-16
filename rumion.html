@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toyota Rumion | Mehek Travels</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h3>Mehek Travels</h3>
+        <div class="header-controls">
+            <button id="themeToggle" class="btn-outline" style="color:white; border-color:white; padding: 5px 10px;">🌗</button>
+            <a href="cart.html" class="btn-outline" style="color:white; border-color:white; text-decoration:none; padding: 5px 10px;">🛒 (<span id="cartCount">0</span>)</a>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="card">
+            <h1>Toyota Rumion 🚐</h1>
+            <img src="images/rumion-placeholder.jpg" alt="Toyota Rumion" style="width:100%; border-radius: 8px; margin: 15px 0;">
+            
+            <div class="price-tag">
+                <strong>Fleet Rates:</strong><br>
+                • Interstate: 18/km<br>
+                • Intercountry: 25/km
+            </div>
+            
+            <label for="transmission">Transmission Type:</label>
+            <select id="transmission">
+                <option value="">-- Select Gear --</option>
+                <option value="Manual Gear">Manual Gear</option>
+                <option value="Automatic">Automatic</option>
+            </select>
+
+            <button id="addToCartBtn" class="btn btn-primary">Add to Booking</button>
+            <a href="seaters.html" class="btn btn-outline" style="display: block; text-align: center;">Back to Selection</a>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Booking | Mehek Travels</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+</head>
+<body>
+    <header>
+        <h3>Booking Summary</h3>
+        <div class="header-controls">
+            <button id="themeToggle" class="btn-outline" style="color:white; border-color:white; padding: 5px 10px;">🌗</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="card">
+            <h4>1. Vehicle Details</h4>
+            <div id="orderPreview" style="margin: 15px 0; border-left: 4px solid #2563eb; padding-left: 10px;">
+                </div>
+
+            <h4 style="margin-top: 25px;">2. Customer & Trip Info</h4>
+            <form id="orderForm">
+                <input type="text" id="userName" placeholder="Full Name" required>
+                <input type="text" id="idProof" placeholder="ID Proof (Aadhar / License No.)" required>
+                
+                <input type="text" id="pickup" placeholder="📍 Pickup Address" required>
+                <input type="text" id="drop" placeholder="🏁 Drop Destination" required>
+                
+                <div style="display: flex; gap: 10px;">
+                    <input type="date" id="date" required>
+                    <input type="time" id="time" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Place Booking Order</button>
+            </form>
+            <a href="seaters.html" class="btn btn-outline" style="display: block; text-align: center; margin-top: 10px;">Change Vehicle</a>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

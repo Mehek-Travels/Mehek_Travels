@@ -1,0 +1,56 @@
+:root {
+    --primary: #2563eb;
+    --accent: #f59e0b;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --text: #334155;
+}
+
+body.dark { --bg: #0f172a; --card: #1e293b; --text: #f1f5f9; }
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); color: var(--text); transition: 0.3s; }
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 5%;
+    background: #1e293b;
+    color: white;
+}
+
+.header-controls { display: flex; gap: 10px; }
+
+.container { max-width: 600px; margin: 2rem auto; padding: 0 1rem; }
+
+.card { 
+    background: var(--card); 
+    padding: 1.5rem; 
+    border-radius: 12px; 
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+    margin-bottom: 1.5rem;
+}
+
+.price-tag { 
+    background: #fffbeb; 
+    border: 1px solid #fde68a;
+    padding: 10px; 
+    border-radius: 6px; 
+    margin: 15px 0;
+    color: #92400e;
+}
+
+.preview-box {
+    border-left: 4px solid var(--primary);
+    background: rgba(37, 99, 235, 0.1);
+    padding: 10px 15px;
+    margin-bottom: 20px;
+}
+
+.btn { width: 100%; padding: 12px; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; margin: 5px 0; text-align: center; text-decoration: none; display: block; }
+.btn-primary { background: var(--primary); color: white; }
+.btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
+
+input, select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 6px; background: var(--card); color: var(--text); }
