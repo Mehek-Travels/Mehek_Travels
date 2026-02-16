@@ -1,84 +1,146 @@
-// Global Initialization
+// ================= INIT =================
 (function init() {
-    emailjs.init('OPN5hE-C-lvjyDHr9'); //
-    if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark'); //
+    if (typeof emailjs !== "undefined") {
+        emailjs.init('YOUR_EMAILJS_PUBLIC_KEY');
+    }
 })();
 
-// Ensure DOM is ready before attaching listeners
-document.addEventListener('DOMContentLoaded', () => {
-    updateCartCount(); //
-    
-    // 1. ADD TO CART LOGIC
-    const addToCartBtn = document.getElementById('addToCartBtn');
-    if (addToCartBtn) {
-        addToCartBtn.onclick = () => {
-            const transmission = document.getElementById('transmission').value; //
-            
+// ================= USER LOGIN =================
+function loginUser() {
+    const username = document.getElementById("username").value;
+
+    if (!username) return alert("Enter username");
+
+    localStorage.setItem("loggedUser", username);
+    window.location.href = "index.html";
+}
+
+function logoutUser() {
+    localStorage.removeItem("loggedUser");
+    window.location.href = "login.html";
+}
+
+// ================= ADMIN LOGIN =================
+function loginAdmin() {
+    const user = document.getElementById("adminUser").value;
+    const pass = document.getElementById("adminPass").value;
+
+    if (user === "admin" && pass === "1234") {
+        localStorage.setItem("adminLogged", "true");
+        window.location.href = "admin.html";
+    } else {
+        alert("Invalid admin credentials");
+    }
+}
+
+// ================= PROTECT ADMIN =================
+if (window.location.pathname.includes("admin.html")) {
+    if (localStorage.getItem("adminLogged") !== "true") {
+        window.location.href = "admin-login.html";
+    }
+}
+
+// ================= CART =================
+document.addEventListener("DOMContentLoaded", () => {
+    updateCartCount();
+
+    const btn = document.getElementById("addToCartBtn");
+    if (btn) {
+        btn.onclick = function () {
+            const transmission = document.getElementById("transmission").value;
+
             if (!transmission) {
-                alert("Please select a transmission type.");
+                alert("Select transmission");
                 return;
             }
 
-            const vehicle = { 
-                name: 'Toyota Rumion', 
-                details: '7 Seaters',
-                rates: '18/km (Interstate) | 25/km (Intercountry)', //
-                transmission: transmission 
-            };
+            const cart = JSON.parse(localStorage.getItem("cart") || "[]");
 
-            // Save as array to localStorage
-            localStorage.setItem('cart', JSON.stringify([vehicle]));
-            alert('🚐 Toyota Rumion added to your booking!');
+            cart.push({
+                name: "Toyota Rumion",
+                transmission: transmission,
+                price: "18/km | 25/km"
+            });
+
+            localStorage.setItem("cart", JSON.stringify(cart));
+            alert("Added to booking");
             updateCartCount();
         };
     }
 
-    // 2. RENDER PREVIEW (on cart.html)
-    if (document.getElementById('orderPreview')) {
+    if (document.getElementById("orderPreview")) {
         renderPreview();
+    }
+
+    if (document.getElementById("adminOrders")) {
+        renderAdminOrders();
     }
 });
 
-// Helper Functions
 function updateCartCount() {
-    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    document.querySelectorAll('#cartCount').forEach(el => {
-        el.textContent = cart.length;
-    });
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+    const el = document.getElementById("cartCount");
+    if (el) el.innerText = cart.length;
 }
 
 function renderPreview() {
-    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    const container = document.getElementById('orderPreview');
-    if (container && cart.length > 0) {
-        container.innerHTML = `
-            <div class="preview-box" style="border-left: 4px solid #2563eb; padding: 10px; background: rgba(37,99,235,0.05);">
-                <strong>Vehicle:</strong> ${cart[0].name}<br>
-                <strong>Gear:</strong> ${cart[0].transmission}<br>
-                <strong>Price:</strong> ${cart[0].rates}
-            </div>`;
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+    const container = document.getElementById("orderPreview");
+
+    if (cart.length === 0) {
+        container.innerHTML = "No vehicle selected";
+        return;
     }
+
+    container.innerHTML = cart.map(item => `
+        <div class="preview-box">
+            <strong>${item.name}</strong><br>
+            Gear: ${item.transmission}<br>
+            Price: ${item.price}
+        </div>
+    `).join("");
 }
 
-// 3. ORDER SUBMISSION (Name & ID Proof Required)
-document.getElementById('orderForm')?.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    if (cart.length === 0) return alert('Please select a vehicle first.');
+// ================= ORDER =================
+function placeOrder() {
+    const name = document.getElementById("name").value;
+    const pickup = document.getElementById("pickup").value;
 
-    //
-    emailjs.send('service_tnwffbk', 'template_zlt8o59', {
-        to_email: 'shaik2vali678@gmail.com', //
-        from_name: document.getElementById('userName').value,
-        id_info: document.getElementById('idProof').value,
-        item: `${cart[0].name} (${cart[0].transmission})`,
-        pickup: document.getElementById('pickup').value,
-        drop: document.getElementById('drop').value,
-        date: document.getElementById('date').value,
-        time: document.getElementById('time').value
-    }).then(() => {
-        alert('Booking order sent successfully!');
-        localStorage.removeItem('cart');
-        window.location.href = 'index.html';
+    if (!name || !pickup) return alert("Fill all fields");
+
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+    const orders = JSON.parse(localStorage.getItem("orders") || "[]");
+
+    orders.push({
+        user: localStorage.getItem("loggedUser"),
+        name,
+        pickup,
+        items: cart
     });
-});
+
+    localStorage.setItem("orders", JSON.stringify(orders));
+    localStorage.removeItem("cart");
+
+    alert("Order placed!");
+    window.location.href = "index.html";
+}
+
+// ================= ADMIN VIEW =================
+function renderAdminOrders() {
+    const orders = JSON.parse(localStorage.getItem("orders") || "[]");
+    const container = document.getElementById("adminOrders");
+
+    if (orders.length === 0) {
+        container.innerHTML = "No orders yet";
+        return;
+    }
+
+    container.innerHTML = orders.map(o => `
+        <div class="card">
+            <strong>User:</strong> ${o.user}<br>
+            <strong>Name:</strong> ${o.name}<br>
+            <strong>Pickup:</strong> ${o.pickup}<br>
+            <strong>Vehicles:</strong> ${o.items.map(i => i.name).join(", ")}
+        </div>
+    `).join("");
+}
